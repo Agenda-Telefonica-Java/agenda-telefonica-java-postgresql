@@ -7,9 +7,9 @@ import java.sql.SQLException;
 /** Padrão singleton
 */
 public class Conexao {
-    private static final String URL = "jdbc:psql://localhost:5432/agenda_java";
+    private static final String URL = "jdbc:postgresql://localhost:5432/agenda_telefonica";
     private static final String USUARIO = "postgres";
-    private static final String SENHA = "postgres";
+    private static final String SENHA = "postgres123";
     private static final String DRIVER = "org.postgresql.Driver";
     
     private static Conexao instancia;
