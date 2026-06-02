@@ -9,16 +9,16 @@ import java.util.List;
 public class ContatoController {
     private final ContatoService service;
     private final MenuView view;
-    
+
     public ContatoController() {
         this.service = new ContatoService();
         this.view = new MenuView();
     }
-    
+
     public void iniciar() {
         while (true) {
             int opcao = view.mostrarMenu();
-            
+
             switch(opcao) {
                 case 1:
                     cadastrarContato();
@@ -62,7 +62,7 @@ public class ContatoController {
 
         view.exibirContato(contato);
     }
-    
+
     private void deletarContato() {
         String nome = view.lerNome();
 
@@ -96,7 +96,7 @@ public class ContatoController {
 
         Contato contatoAtualizado = view.lerContato();
         if (contatoInvalido(contatoAtualizado)) {
-            view.exibir("Todos os campos sao obrigatorios.");
+            view.exibir("Informe nome, telefone e email validos.");
             return;
         }
 
@@ -118,7 +118,11 @@ public class ContatoController {
     private void cadastrarContato() {
         Contato contato = view.lerContato();
         if (contatoInvalido(contato)) {
-            view.exibir("Todos os campos sao obrigatorios.");
+            view.exibir("Informe nome, telefone e email validos.");
+            return;
+        }
+        if (service.buscarPorNome(contato.getNome()) != null) {
+            view.exibir("Ja existe um contato cadastrado com esse nome.");
             return;
         }
 
@@ -133,11 +137,27 @@ public class ContatoController {
     private boolean contatoInvalido(Contato contato) {
         return contato == null
                 || textoVazio(contato.getNome())
-                || textoVazio(contato.getTelefone())
-                || textoVazio(contato.getEmail());
+                || telefoneInvalido(contato.getTelefone())
+                || emailInvalido(contato.getEmail());
     }
 
     private boolean textoVazio(String texto) {
         return texto == null || texto.trim().isEmpty();
+    }
+
+    private boolean telefoneInvalido(String telefone) {
+        if (textoVazio(telefone)) {
+            return true;
+        }
+
+        return !telefone.trim().matches("^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$");
+    }
+
+    private boolean emailInvalido(String email) {
+        if (textoVazio(email)) {
+            return true;
+        }
+
+        return !email.trim().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 }

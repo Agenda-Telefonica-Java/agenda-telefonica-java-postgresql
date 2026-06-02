@@ -7,14 +7,24 @@ import java.sql.SQLException;
 /** Padrão singleton
 */
 public class Conexao {
-    private static final String URL = "jdbc:postgresql://localhost:5433/agenda_telefonica";
-    private static final String USUARIO = "postgres";
-    private static final String SENHA = "postgres123";
+
+    private static final String URL = System.getenv().getOrDefault(
+            "DB_URL",
+            "jdbc:postgresql://localhost:5432/agenda_telefonica"
+    );
+
+    private static final String USUARIO = System.getenv().getOrDefault(
+            "DB_USUARIO",
+            "postgres"
+    );
+
+    private static final String SENHA = System.getenv("DB_SENHA");
+
     private static final String DRIVER = "org.postgresql.Driver";
-    
+
     private static Conexao instancia;
     private Connection conexao;
-    
+
     private Conexao() {
         // vazio
     }

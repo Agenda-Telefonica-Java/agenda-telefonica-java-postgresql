@@ -24,7 +24,7 @@ Os dados sao persistidos em um banco de dados relacional PostgreSQL.
 ## 2. Tecnologias Utilizadas
 
 - Java;
-- JDK 17 ou superior;
+- JDK 21;
 - PostgreSQL;
 - JDBC;
 - Maven;
@@ -352,10 +352,32 @@ database/agenda_telefonica.sql
 5. Configurar a conexao no arquivo `Conexao.java`, se necessario:
 
 ```java
-private static final String URL = "jdbc:postgresql://localhost:5433/agenda_telefonica";
-private static final String USUARIO = "postgres";
-private static final String SENHA = "postgres123";
+private static final String URL = System.getenv().getOrDefault(
+        "DB_URL",
+        "jdbc:postgresql://localhost:5432/agenda_telefonica"
+);
+
+private static final String USUARIO = System.getenv().getOrDefault(
+        "DB_USUARIO",
+        "postgres"
+);
+
+private static final String SENHA = System.getenv("DB_SENHA");
 ```
+### Configuração das variáveis de ambiente
+
+Antes de executar a aplicação, configure as variáveis de ambiente conforme a instalação local do PostgreSQL:
+
+```text
+DB_URL=jdbc:postgresql://localhost:5432/agenda_telefonica
+DB_USUARIO=postgres
+DB_SENHA=sua_senha_local
+```
+
+Caso o PostgreSQL esteja configurado em outra porta, ajuste o valor de `DB_URL`.
+
+A senha do banco de dados não deve ser armazenada no código-fonte nem publicada no repositório.
+
 
 6. Compilar e testar o projeto:
 
