@@ -8,9 +8,11 @@ import java.sql.SQLException;
 */
 public class Conexao {
 
+    private static final String NOME_BD = "agenda_telefonica";
+
     private static final String URL = System.getenv().getOrDefault(
             "DB_URL",
-            "jdbc:postgresql://localhost:5432/agenda_telefonica"
+            "jdbc:postgresql://localhost:5432/" + NOME_BD
     );
 
     private static final String USUARIO = System.getenv().getOrDefault(
@@ -18,13 +20,16 @@ public class Conexao {
             "postgres"
     );
 
-    private static final String SENHA = System.getenv("DB_SENHA");
+    private static final String SENHA = System.getenv().getOrDefault(
+        "DB_SENHA",
+        "postgres"
+    );
 
     private static final String DRIVER = "org.postgresql.Driver";
 
     private static Conexao instancia;
     private Connection conexao;
-
+    
     private Conexao() {
         // vazio
     }

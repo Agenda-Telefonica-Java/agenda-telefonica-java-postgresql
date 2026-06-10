@@ -2,7 +2,7 @@ package alunos.puc;
 
 import alunos.puc.controller.ContatoController;
 
-public class AgendaTeste {
+public class AgendaUI {
     public static void main(String[] args) {
         ContatoController controller = new ContatoController();
         controller.iniciar();

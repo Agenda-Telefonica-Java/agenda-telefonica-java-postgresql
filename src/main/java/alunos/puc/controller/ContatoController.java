@@ -5,6 +5,7 @@ import alunos.puc.service.ContatoService;
 import alunos.puc.view.MenuView;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class ContatoController {
     private final ContatoService service;
@@ -42,6 +43,10 @@ public class ContatoController {
                     view.exibir("Opcao invalida!");
                     break;
             }
+
+            var sc = new Scanner(System.in);
+            System.out.println("Pressione enter para continuar...");
+            sc.nextLine();
         }
     }
 
